@@ -31,13 +31,13 @@ php bin/hyperf.php start
 
 请随意输入英文或数字账号，这里是将用户账号当做`uid`使用，存入`redis`当中
 
-![登陆](public/images/example/1.png)
+![登陆](public/example/1.png)
 
 ### 打牌
 
 根据按钮来操作打牌逻辑，消息框里会提示打牌逻辑过程
 
-![打牌](public/images/example/2.png)
+![打牌](public/example/2.png)
 
 ## 写在最后
 
