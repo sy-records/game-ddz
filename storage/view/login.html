@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>login</title>
+    <link rel="icon" type="image/GIF" href=""/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,target-densitydpi=high-dpi, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="full-screen" content="yes"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="360-fullscreen" content="true"/>
+    <style>
+        body,div {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -khtml-user-select: none;
+            -webkit-tap-highlight-color: rgba(0, 0,0,0);
+            text-align:center;
+        }
+        #login {
+            position: relative;
+            margin:100px auto;
+        }
+        #tips {
+            font-size:10px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="login">
+    <form  method="post">
+        <input type="hidden" id= "action" name="action" value="login" >
+        用户帐号：<input type="text" id= "account" name="account" size="18" value="" >
+        <input type="submit" name="submit" value="登陆" onclick="return check(this.form)">
+    </form>
+</div>
+<div id="tips">
+    <span><?=$tips?></span>
+</div>
+</div>
+</body>
+</html>
