@@ -69,7 +69,8 @@ var Resp = {
 	//聊天数据
     chatMsg: function(data) {
         this.log(data);
-		this.showTips('聊天内容是:'+JSON.stringify(data));
+		// this.showTips('聊天内容是:'+JSON.stringify(data));
+		this.showTips(data.user + '发送的聊天内容是：' + data.data);
     },
 	
 	//进入房间失败
