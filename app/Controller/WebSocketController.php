@@ -89,12 +89,14 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
             $redis = redis();
             $user_bind_key = sprintf($game_conf['user_bind_key'], $uinfo['account']);
             $last_fd = (int)$redis->get($user_bind_key);
-            //之前信息存在， 清除之前的连接
+            //之前信息存在，清除之前的连接
             if ($last_fd) {
-                //处理双开的情况
-                $this->loginFail($last_fd, '1');
-                $server->disconnect($last_fd);
-                //清理redis.
+                if ($server->exist($last_fd) && $server->isEstablished($last_fd)) {
+                    //处理双开的情况
+                    $this->loginFail($last_fd, '1');
+                    $server->disconnect($last_fd);
+                }
+                //清理redis
                 $redis->del($user_bind_key); //清除上一个绑定关系
                 $redis->del(sprintf($game_conf['user_info_key'], $last_fd)); //清除上一个用户信息
             }
@@ -104,8 +106,10 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
             $redis->set(sprintf($game_conf['user_info_key'], $fd), json_encode($uinfo), $game_conf['expire']);
             $this->loginSuccess($server, $fd, $uinfo['account']);  //登陆成功
         } else {
-            $this->loginFail($fd, '2');
-            $server->disconnect($fd);
+            if ($server->exist($fd) && $server->isEstablished($fd)) {
+                $this->loginFail($fd, '2');
+                $server->disconnect($fd);
+            }
         }
     }
 
@@ -146,7 +150,9 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
         if ($server->getClientInfo($fd) !== false) {
             $data = Packet::packFormat('OK', 0, array('data' => 'login fail' . $msg));
             $back = Packet::packEncode($data, MainCmd::CMD_SYS, SubCmd::LOGIN_FAIL_RESP);
-            $server->push($fd, $back, WEBSOCKET_OPCODE_BINARY);
+            if ($server->exist($fd) && $server->isEstablished($fd)) {
+                $server->push($fd, $back, WEBSOCKET_OPCODE_BINARY);
+            }
         }
     }
 
