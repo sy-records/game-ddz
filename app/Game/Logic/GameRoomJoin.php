@@ -48,13 +48,12 @@ class GameRoomJoin extends AStrategy
     			$result = false;
     		} else {
         		$res = $redis->sadd($room_user_list_key, $account);
+        		
+        		// 保存用户和房间的关系
+        		$user_key = sprintf($this->getGameConf('user_room'), $account);
+        		$redis->set($user_key, $room_no);
             }
-        
-    		
-    		// 保存用户和房间的关系
-    		$user_key = sprintf($this->getGameConf('user_room'), $account);
-    		$redis->set($user_key, $room_no);
-    		
+
     		if (!$result) {
     			// 房间人数已满3人
     			$msg = array(
