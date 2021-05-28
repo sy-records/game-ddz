@@ -85,7 +85,7 @@ class GameCall extends AStrategy
         }
         $data = Packet::packFormat('OK', 0, $msg);
         $data = Packet::packEncode($data, MainCmd::CMD_GAME, SubCmd::SUB_GAME_CALL_RESP);
-        $this->_params['serv']->push($this->_params['userinfo']['fd'], $data, WEBSOCKET_OPCODE_BINARY);
+        $this->_params['serv']->push((int) $this->_params['userinfo']['fd'], $data, WEBSOCKET_OPCODE_BINARY);
     }
 
     /**

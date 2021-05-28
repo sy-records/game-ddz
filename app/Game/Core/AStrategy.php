@@ -54,7 +54,7 @@ namespace App\Game\Core;
      protected function Broadcast($serv, $data)
      {
          foreach ($serv->connections as $fd) {
-             $serv->push($fd, $data, WEBSOCKET_OPCODE_BINARY);
+             $serv->push((int) $fd, $data, WEBSOCKET_OPCODE_BINARY);
          }
      }
 
@@ -75,9 +75,9 @@ namespace App\Game\Core;
              $start_fd = end($conn_list);
              foreach ($conn_list as $fd) {
                  //获取客户端信息
-                 $client_info = $serv->getClientInfo($fd);
+                 $client_info = $serv->getClientInfo((int) $fd);
                  if (isset($client_info['websocket_status']) && $client_info['websocket_status'] == 3) {
-                     $serv->push($fd, $data, WEBSOCKET_OPCODE_BINARY);
+                     $serv->push((int) $fd, $data, WEBSOCKET_OPCODE_BINARY);
                  }
              }
          }
@@ -93,10 +93,10 @@ namespace App\Game\Core;
      {
          foreach ($users as $fd) {
              //获取客户端信息
-             $client_info = $serv->getClientInfo($fd);
+             $client_info = $serv->getClientInfo((int) $fd);
              $client[$fd] = $client_info;
              if (isset($client_info['websocket_status']) && $client_info['websocket_status'] == 3) {
-                 $serv->push($fd, $data, WEBSOCKET_OPCODE_BINARY);
+                 $serv->push((int) $fd, $data, WEBSOCKET_OPCODE_BINARY);
              }
          }
      }

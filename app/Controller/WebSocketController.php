@@ -59,7 +59,7 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
             if (! empty($obj->getStrategy())) {
                 $back = $obj->exec();
                 if ($back) {
-                    $server->push($frame->fd, $back, WEBSOCKET_OPCODE_BINARY);
+                    $server->push((int) $frame->fd, $back, WEBSOCKET_OPCODE_BINARY);
                 }
             }
             Log::show('Tcp Strategy <<<  data=' . $back);
@@ -174,7 +174,7 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
     private function loginSuccess($server, $fd, $account)
     {
         //原封不动发回去
-        if ($server->getClientInfo($fd) !== false) {
+        if ($server->getClientInfo((int) $fd) !== false) {
             //查询用户是否在房间里面
             $info = $this->getRoomData($account);
             $data = ['status' => 'success'];
@@ -185,7 +185,7 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
             }
             $data = Packet::packFormat('OK', 0, $data);
             $back = Packet::packEncode($data, MainCmd::CMD_SYS, SubCmd::LOGIN_SUCCESS_RESP);
-            $server->push($fd, $back, WEBSOCKET_OPCODE_BINARY);
+            $server->push((int) $fd, $back, WEBSOCKET_OPCODE_BINARY);
         }
     }
 
@@ -199,11 +199,11 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
     {
         //原封不动发回去
         $server = server();
-        if ($server->getClientInfo($fd) !== false) {
+        if ($server->getClientInfo((int) $fd) !== false) {
             $data = Packet::packFormat('OK', 0, ['data' => 'login fail' . $msg]);
             $back = Packet::packEncode($data, MainCmd::CMD_SYS, SubCmd::LOGIN_FAIL_RESP);
             if ($server->exist($fd) && $server->isEstablished($fd)) {
-                $server->push($fd, $back, WEBSOCKET_OPCODE_BINARY);
+                $server->push((int) $fd, $back, WEBSOCKET_OPCODE_BINARY);
             }
         }
     }

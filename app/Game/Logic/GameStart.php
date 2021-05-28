@@ -99,7 +99,7 @@ class GameStart extends AStrategy
             $data = Packet::packFormat('OK', 0, $msg);
             $data = Packet::packEncode($data, MainCmd::CMD_SYS, SubCmd::ENTER_ROOM_FAIL_RESP);
             $serv = server();
-            $serv->push($this->_params['userinfo']['fd'], $data, WEBSOCKET_OPCODE_BINARY);
+            $serv->push((int) $this->_params['userinfo']['fd'], $data, WEBSOCKET_OPCODE_BINARY);
         }
         return 0;
     }

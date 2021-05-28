@@ -86,7 +86,7 @@ class GameRoomJoin extends AStrategy
             if ($tmpFd) {
                 $data = Packet::packFormat('OK', 0, $msg_data);
                 $data = Packet::packEncode($data, MainCmd::CMD_GAME, SubCmd::CHAT_MSG_RESP);
-                server()->push($tmpFd, $data, WEBSOCKET_OPCODE_BINARY);
+                server()->push((int) $tmpFd, $data, WEBSOCKET_OPCODE_BINARY);
             }
         }
         return 0;

@@ -76,7 +76,7 @@ class GameSyncTask
                 if (isset($fds[$v])) {
                     $data = Packet::packFormat('OK', 0, $room_data[$v]);
                     $data = Packet::packEncode($data, MainCmd::CMD_SYS, SubCmd::ENTER_ROOM_SUCC_RESP);
-                    $serv->push($fds[$v], $data, WEBSOCKET_OPCODE_BINARY);
+                    $serv->push((int) $fds[$v], $data, WEBSOCKET_OPCODE_BINARY);
                 }
             }
         } else {
@@ -87,7 +87,7 @@ class GameSyncTask
             ];
             $data = Packet::packFormat('OK', 0, $msg);
             $data = Packet::packEncode($data, MainCmd::CMD_SYS, SubCmd::ENTER_ROOM_FAIL_RESP);
-            $serv->push($fd, $data, WEBSOCKET_OPCODE_BINARY);
+            $serv->push((int) $fd, $data, WEBSOCKET_OPCODE_BINARY);
         }
     }
 
@@ -132,10 +132,10 @@ class GameSyncTask
             $start_fd = end($conn_list);
             foreach ($conn_list as $fd) {
                 //获取客户端信息
-                $client_info = $serv->getClientInfo($fd);
+                $client_info = $serv->getClientInfo((int) $fd);
                 $client[$fd] = $client_info;
                 if (isset($client_info['websocket_status']) && $client_info['websocket_status'] == 3) {
-                    $serv->push($fd, $data, WEBSOCKET_OPCODE_BINARY);
+                    $serv->push((int) $fd, $data, WEBSOCKET_OPCODE_BINARY);
                 }
             }
         }
@@ -152,10 +152,10 @@ class GameSyncTask
     {
         foreach ($users as $fd) {
             //获取客户端信息
-            $client_info = $serv->getClientInfo($fd);
+            $client_info = $serv->getClientInfo((int) $fd);
             $client[$fd] = $client_info;
             if (isset($client_info['websocket_status']) && $client_info['websocket_status'] == 3) {
-                $serv->push($fd, $data, WEBSOCKET_OPCODE_BINARY);
+                $serv->push((int) $fd, $data, WEBSOCKET_OPCODE_BINARY);
             }
         }
     }

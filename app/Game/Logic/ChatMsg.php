@@ -51,7 +51,7 @@ use App\Game\Core\Packet;
          foreach ($fds as $fd) {
              $data = Packet::packFormat('OK', 0, $msg_data);
              $data = Packet::packEncode($data, MainCmd::CMD_GAME, SubCmd::CHAT_MSG_RESP);
-             server()->push($fd, $data, WEBSOCKET_OPCODE_BINARY);
+             server()->push((int) $fd, $data, WEBSOCKET_OPCODE_BINARY);
          }
      }
  }
