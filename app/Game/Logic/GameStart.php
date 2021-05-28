@@ -63,13 +63,35 @@ class GameStart extends AStrategy
             $room_data = Packet::packEncode($room_data, MainCmd::CMD_SYS, SubCmd::ENTER_ROOM_SUCC_RESP);
             return $room_data;
         } else {
-            $room_list = $this->getGameConf('room_list');
-            if($room_list) {
-                //判断是否在队列里面
-                redis()->sAdd($room_list, $this->_params['userinfo']['account']);
-                //投递异步任务
-                $task = container()->get(GameSyncTask::class);
-                $task->gameRoomMatch($this->_params['userinfo']['fd']);
+            //$room_list = $this->getGameConf('room_list');
+            //if($room_list) {
+            //判断是否在队列里面
+            //redis()->sAdd($room_list, $this->_params['userinfo']['account']);
+            //投递异步任务
+            //$task = container()->get(GameSyncTask::class);
+            //$task->gameRoomMatch($this->_params['userinfo']['fd']);
+            //}
+            
+        	$room_no = $this->getRoomNo($account);
+            if ($room_no) {
+            	$task = container()->get(GameSyncTask::class);
+            	$task->gameRoomMatch($this->_params['userinfo']['fd'], $room_no);
+            } else {
+                // 没有进入房间的放到公共队列里
+                $room_list = $this->getGameConf('room_list');
+                if($room_list) {
+                    redis()->sAdd($room_list, $this->_params['userinfo']['account']);
+                }
+
+                //未加入房间
+                $msg = array(
+                    'status'=>'fail',
+                    'msg'=>'您还未加入房间，请创建房间或者输入房间号进入房间!'
+                );
+                $data = Packet::packFormat('OK', 0, $msg);
+                $data = Packet::packEncode($data, MainCmd::CMD_SYS, SubCmd::ENTER_ROOM_FAIL_RESP);
+                $serv = server();
+                $serv->push($this->_params['userinfo']['fd'], $data, WEBSOCKET_OPCODE_BINARY);
             }
             return 0;
         }

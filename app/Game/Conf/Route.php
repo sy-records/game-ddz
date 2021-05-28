@@ -26,6 +26,8 @@ class Route
             SubCmd::SUB_GAME_DOUBLE_REQ =>'GameDouble',
             SubCmd::SUB_GAME_OUT_CARD_REQ =>'GameOutCard',
             SubCmd::CHAT_MSG_REQ =>'ChatMsg',
+            SubCmd::SUB_GAME_ROOM_CREATE =>'GameRoomCreate',
+            SubCmd::SUB_GAME_ROOM_JOIN =>'GameRoomJoin',
         ),
     );
 }

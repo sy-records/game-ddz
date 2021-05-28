@@ -16,6 +16,8 @@ class SubCmd
     const BROADCAST_MSG_RESP = 104;     //系统广播消息请求
     const ENTER_ROOM_FAIL_RESP = 106;			//进入房间失败协议
     const ENTER_ROOM_SUCC_RESP = 107;			//进入房间成功协议
+    const CREATE_ROOM_SUCC_RESP = 108; // 创建房间成功
+    const CREATE_ROOM_FAIL_RESP = 109; // 创建房间成功
 
     //游戏逻辑子命令字,对应MainCmd.CMD_GAME
     const SUB_GAME_START_REQ = 1;				//游戏开始---> CGameStart
@@ -32,6 +34,8 @@ class SubCmd
     const SUB_GAME_OUT_CARD = 12;		        //出牌提示 --> CGameOutCard
     const SUB_GAME_OUT_CARD_REQ = 13;		    //出牌请求 --> CGameOutCardReq
     const SUB_GAME_OUT_CARD_RESP = 14;		    //出牌返回 --> CGameOutCardResp
+    const SUB_GAME_ROOM_CREATE = 31;            //创建房间
+    const SUB_GAME_ROOM_JOIN = 32;              //加入房间
     const CHAT_MSG_REQ = 213;			        //聊天消息请求，客户端使用
     const CHAT_MSG_RESP = 214;			        //聊天消息响应，服务端使用
 }

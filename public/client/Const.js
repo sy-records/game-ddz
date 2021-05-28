@@ -29,6 +29,9 @@ var SubCmd = {
     SUB_GAME_OUT_CARD_REQ  :  13, //出牌请求 --> CGameOutCardReq
     SUB_GAME_OUT_CARD_RESP :  14, //出牌返回 --> CGameOutCardResp
 
+    SUB_GAME_ROOM_CREATE : 31,
+    SUB_GAME_ROOM_JOIN : 32,
+
     CHAT_MSG_REQ : 213,      //聊天消息请求，客户端使用
     CHAT_MSG_RESP : 214,     //聊天消息响应，服务端使用
 }
@@ -47,6 +50,8 @@ var SubCmd = {
         104 : 'broadcast',    //广播消息
         106 : 'enterRoomFail',    //进入房间失败
         107 : 'enterRoomSucc',    //进入房间成功
+        108 : 'createRoomSucc',   //创建房间成功
+        109 : 'createRoomFail',   //创建房间失败
     },
     2 : {
         2 : 'gameStart',    //获取卡牌

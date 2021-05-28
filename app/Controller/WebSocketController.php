@@ -32,7 +32,7 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
         $this->container = $container;
     }
 
-    public function onMessage(WebSocketServer $server, Frame $frame): void
+    public function onMessage($server, Frame $frame): void
     {
         Log::show(" Message: client #{$frame->fd} push success Mete: \n{");
         $data = Packet::packDecode($frame->data);
@@ -64,13 +64,13 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
         Log::split('}');
     }
 
-    public function onClose(Server $server, int $fd, int $reactorId): void
+    public function onClose($server, int $fd, int $reactorId): void
     {
         //清除登陆信息变量
         $this->loginFail($fd, '3');
     }
 
-    public function onOpen(WebSocketServer $server, Request $request): void
+    public function onOpen($server, Request $request): void
     {
         $fd = $request->fd;
         $game_conf = config('game');

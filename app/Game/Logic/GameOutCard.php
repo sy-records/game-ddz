@@ -138,6 +138,27 @@ class GameOutCard extends AStrategy
             'is_game_over' => $is_game_over        //游戏是否结束
         );
 
+
+        // 如果游戏结束，构造游戏结果
+        if ($is_game_over) {
+            // 获取当前玩家身份
+            $master = $user_room_data['master'] ?? '';
+            $step['result'] = $account . ":1";
+            $is_master = ($master == $account) ? 1 : 0;
+            $user_info = json_decode($user_room_data['uinfo'], true);
+            
+            // 获取所有玩家
+            foreach ($user_info as $user_account) {
+                if ($account != $user_account) {
+                    if ($master == $user_account) {
+                        $step['result'] .= " {$user_account}:0";
+                    } else {
+                        $step['result'] .= " {$user_account}:" . ($is_master ? 0 : 1);
+                    }
+                }
+            }
+        }
+
         //记录一下出牌数据, 记录没步骤录像数据
         $this->setRoomPlayCardStep($account, 'step_'.$hand, json_encode($step));
         //广播打牌结果
@@ -239,6 +260,12 @@ class GameOutCard extends AStrategy
         if($is_game_over) {
             //设置游戏结束标识
             $this->setRoomData($account, 'is_game_over', $is_game_over);
+
+            // 清除房间队列
+            $room_no = $this->getRoomNo($account);  
+            $key = sprintf($this->getGameConf('room_user_list'), $room_no);;
+            redis()->del($key);
+
             //清除数据, 进行下一轮玩牌, 随机分配
             $this->clearRoomNo($uinfo);
         }

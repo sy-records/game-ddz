@@ -27,5 +27,7 @@ return [
                 'allowInlineLineBreaks' => true,
             ],
         ],
+	'processors' => [
+	],
     ],
 ];

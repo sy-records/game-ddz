@@ -5,6 +5,7 @@ use App\Game\Core\AStrategy;
 use App\Game\Core\Packet;
 use App\Game\Conf\MainCmd;
 use App\Game\Conf\SubCmd;
+use App\Game\Core\Log;
 
  class ChatMsg extends AStrategy
  {
@@ -35,6 +36,9 @@ use App\Game\Conf\SubCmd;
         }
         $user = ["user" => $this->_params['userinfo']['account']];
         $msg_data = array_merge($user, $this->_params['data']);
+
+
+	    $fds[] = $fd = $this->_params['userinfo']['fd'];
         //分别发消息给三个人
         foreach($fds as $fd) {
             $data = Packet::packFormat('OK', 0, $msg_data);

@@ -27,46 +27,26 @@ class GameSyncTask
     {
         $this->container = $container;
     }
-
+    
     /**
      * 游戏房间匹配
      * @Task
      */
-    public function gameRoomMatch($fd) : void
+    public function gameRoomMatch($fd, $room_no) : void
     {
         $game_conf = config('game');
         $redis = redis();
-        $len = $redis->sCard($game_conf['room_list']);
+        $room_user_list_key = sprintf($game_conf['room_user_list'], $room_no);
+        $len = $redis->sCard($room_user_list_key);
         $serv = server();
-        if($len >= 3) {
+        if(!empty($room_no) && $len == 3) {
             //匹配成功, 下发手牌数据, 并进入房间数据
-            $users = $users_key = $fds = array();
-            for($i = 0; $i < 3; $i++) {
-                $account = $redis->sPop($game_conf['room_list']);
+            $users = $redis->sRandMember($room_user_list_key, 3);
+            $users_key = $fds = array();
+            foreach ($users as $account) {
                 $key = sprintf($game_conf['user_bind_key'], $account);
                 //根据账号获取fd
                 $fds[$account] = $redis->get($key);
-                //获取账号数
-                $users[] = $account;
-            }
-            //获取房间号
-            $room_no_key = $game_conf['user_room_no'];
-            if($redis->exists($room_no_key)) {
-                $room_no = $redis->get($room_no_key);
-                $room_no++;
-                $redis->set($room_no_key, $room_no);
-            } else {
-                $room_no = intval(1000001);
-                $redis->set($room_no_key, $room_no);
-            }
-            //存入房间号和用户对应关系
-            foreach($users as $v) {
-                $user_key = sprintf($game_conf['user_room'], $v);
-                $user_room[$user_key] = $room_no;
-            }
-
-            if(!empty($user_room)) {
-                $redis->mset($user_room);
             }
 
             //随机发牌

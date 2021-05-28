@@ -31,9 +31,13 @@
         服务器链接:
         <input id="url" value="ws://<?php echo $host;?>" >
         <input class="btn" type="button" value="连接" id="ConnBt" onclick="conn()">
+       加入房间：
+        <input id="room_no" value="">
+        <input class="btn" type="button" value="加入房间" id="join" name="conn" onclick="join()"> 
     </div>
     <br>
     <div >
+        <input class="btn" type="button" value="创建房间" id="create" name="conn" onclick="create()">
         <input class="btn" type="button" value="游戏开始" id="conn" name="conn" onclick="start()">
         <input class="btn" type="button" value="叫地主" id="call" name="call" onclick="call()" disabled>
         <input class="btn" type="button" value="不叫" id="nocall" name="nocall" onclick="nocall()" disabled>
@@ -91,6 +95,18 @@
     }
     //websocket
     var obj = conn();
+
+    // 创建房间
+    function create() {
+        Req.RoomCreate(obj, []);
+    }
+    
+    // 加入房间
+    function join() {
+        var data = document.getElementById('room_no').value;
+        if(data.length <= 0) return ;
+        Req.RoomJoin(obj, data);
+    }
 
     //游戏开始
     function start() {
