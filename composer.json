@@ -10,7 +10,7 @@
         "middleware"
     ],
     "description": "A coroutine framework that focuses on hyperspeed and flexible, specifically use for build microservices and middlewares.",
-    "license": "Apache-2.1",
+    "license": "Apache-2.0",
     "require": {
         "php": ">=7.3",
         "ext-swoole": ">=4.4",
@@ -42,13 +42,13 @@
         "hyperf/task": "2.1.*"
     },
     "require-dev": {
-        "swoft/swoole-ide-helper": "^4.2",
+        "swoft/swoole-ide-helper": "^4.6",
         "phpmd/phpmd": "^2.6",
         "friendsofphp/php-cs-fixer": "^2.14",
         "mockery/mockery": "^1.0",
         "phpstan/phpstan": "^0.12",
         "hyperf/testing": "2.1.*",
-	"doctrine/inflector": "2.0"
+	    "doctrine/inflector": "2.0"
     },
     "suggest": {
         "ext-openssl": "Required to use HTTPS.",
@@ -78,7 +78,7 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-autoload-dump": [
-	   "rm -rf runtime/container"
+	        "rm -rf runtime/container"
         ],
         "test": "co-phpunit -c phpunit.xml --colors=always",
         "cs-fix": "php-cs-fixer fix $1",

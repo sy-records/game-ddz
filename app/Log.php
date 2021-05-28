@@ -1,13 +1,16 @@
 <?php
-/**
- * User: lufei
- * Date: 2020/1/14
- * Email: lufei@swoole.com
- */
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://doc.hyperf.io
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf-cloud/hyperf/blob/master/LICENSE
+ */
 namespace App;
 
-use Hyperf\Logger\Logger;
 use Hyperf\Utils\ApplicationContext;
 
 class Log
