@@ -9,7 +9,6 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf-cloud/hyperf/blob/master/LICENSE
  */
-
 return [
     'default' => [
         'handler' => [
@@ -26,6 +25,8 @@ return [
                 'dateFormat' => null,
                 'allowInlineLineBreaks' => true,
             ],
+        ],
+        'processors' => [
         ],
     ],
 ];

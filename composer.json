@@ -12,43 +12,43 @@
     "description": "A coroutine framework that focuses on hyperspeed and flexible, specifically use for build microservices and middlewares.",
     "license": "Apache-2.0",
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.3",
         "ext-swoole": ">=4.4",
         "ext-msgpack": "*",
-        "hyperf/cache": "~1.1.0",
-        "hyperf/command": "~1.1.0",
-        "hyperf/config": "~1.1.0",
-        "hyperf/contract": "~1.1.0",
-        "hyperf/database": "~1.1.0",
-        "hyperf/db-connection": "~1.1.0",
-        "hyperf/devtool": "~1.1.0",
-        "hyperf/di": "~1.1.0",
-        "hyperf/dispatcher": "~1.1.0",
-        "hyperf/event": "~1.1.0",
-        "hyperf/exception-handler": "~1.1.0",
-        "hyperf/framework": "~1.1.0",
-        "hyperf/guzzle": "~1.1.0",
-        "hyperf/http-server": "~1.1.0",
-        "hyperf/logger": "~1.1.0",
-        "hyperf/memory": "~1.1.0",
-        "hyperf/paginator": "~1.1.0",
-        "hyperf/pool": "~1.1.0",
-        "hyperf/process": "~1.1.0",
-        "hyperf/redis": "~1.1.0",
-        "hyperf/utils": "~1.1.0",
-        "hyperf/view": "^1.1",
-        "hyperf/websocket-server": "^1.1",
+        "hyperf/cache": "2.1.*",
+        "hyperf/command": "2.1.*",
+        "hyperf/config": "2.1.*",
+        "hyperf/contract": "2.1.*",
+        "hyperf/database": "2.1.*",
+        "hyperf/db-connection": "2.1.*",
+        "hyperf/devtool": "2.1.*",
+        "hyperf/di": "2.1.*",
+        "hyperf/dispatcher": "2.1.*",
+        "hyperf/event": "2.1.*",
+        "hyperf/exception-handler": "2.1.*",
+        "hyperf/framework": "2.1.*",
+        "hyperf/guzzle": "2.1.*",
+        "hyperf/http-server": "2.1.*",
+        "hyperf/logger": "2.1.*",
+        "hyperf/memory": "2.1.*",
+        "hyperf/paginator": "2.1.*",
+        "hyperf/pool": "2.1.*",
+        "hyperf/process": "2.1.*",
+        "hyperf/redis": "2.1.*",
+        "hyperf/utils": "2.1.*",
+        "hyperf/view": "2.1.*",
+        "hyperf/websocket-server": "2.1.*",
         "sy-records/think-template": "^2.0",
-        "hyperf/task": "^1.1"
+        "hyperf/task": "2.1.*"
     },
     "require-dev": {
-        "swoft/swoole-ide-helper": "^4.2",
+        "swoft/swoole-ide-helper": "^4.6",
         "phpmd/phpmd": "^2.6",
         "friendsofphp/php-cs-fixer": "^2.14",
         "mockery/mockery": "^1.0",
-        "doctrine/common": "^2.9",
-        "phpstan/phpstan": "^0.11.2",
-        "hyperf/testing": "~1.1.0"
+        "phpstan/phpstan": "^0.12",
+        "hyperf/testing": "2.1.*",
+	    "doctrine/inflector": "2.0"
     },
     "suggest": {
         "ext-openssl": "Required to use HTTPS.",
@@ -78,12 +78,11 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-autoload-dump": [
-            "init-proxy.sh"
+	        "rm -rf runtime/container"
         ],
         "test": "co-phpunit -c phpunit.xml --colors=always",
         "cs-fix": "php-cs-fixer fix $1",
         "analyse": "phpstan analyse --memory-limit 300M -l 0 -c phpstan.neon ./app ./config",
-        "start": "php ./bin/hyperf.php start",
-        "init-proxy": "init-proxy.sh"
+        "start": "php ./bin/hyperf.php start"
     }
 }

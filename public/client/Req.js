@@ -17,6 +17,18 @@ var Req = {
         }, 600000);
     },
 
+    
+    //创建房间
+    RoomCreate: function(obj,data) {
+        var data = {};
+        obj.send(data, MainCmd.CMD_GAME, SubCmd.SUB_GAME_ROOM_CREATE);
+    },
+    
+    //加入房间
+    RoomJoin: function(obj,data) {
+        obj.send(data, MainCmd.CMD_GAME, SubCmd.SUB_GAME_ROOM_JOIN);
+    },
+
     //游戏开始
     GameStart: function(obj,data) {
         var data = {};

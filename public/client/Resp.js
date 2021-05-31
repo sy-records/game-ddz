@@ -78,6 +78,18 @@ var Resp = {
         this.log(data);
 		this.showTips('进入房间失败:'+data.msg);
     },
+
+    
+    //创建房间
+    RoomCreate: function(obj,data) {
+        var data = {};
+        obj.send(data, MainCmd.CMD_GAME, SubCmd.SUB_GAME_ROOM_CREATE);
+    },
+    
+    //加入房间
+    RoomJoin: function(obj,data) {
+        obj.send(data, MainCmd.CMD_GAME, SubCmd.SUB_GAME_ROOM_JOIN);
+    },
 	
 	//进入房间成功,解锁按钮
     enterRoomSucc: function(data) {
@@ -158,7 +170,7 @@ var Resp = {
 	gameOutCardResp: function(data) {
 		//判断游戏是否结束
 		if(data.is_game_over) {
-			this.showTips('广播:游戏结束,'+data.account+'胜利, 请点击"开始游戏",进行下一轮游戏');
+			this.showTips('广播:游戏结束,' + data.result  + ', 请点击"开始游戏",进行下一轮游戏');
 			//手牌重置
 			document.getElementById('chair_1').innerHTML  =  '';
 			document.getElementById('chair_2').innerHTML  =  '';
