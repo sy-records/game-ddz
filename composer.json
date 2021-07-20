@@ -42,13 +42,13 @@
         "hyperf/task": "2.1.*"
     },
     "require-dev": {
-        "swoft/swoole-ide-helper": "^4.6",
+        "swoole/ide-helper": "^4.6",
         "phpmd/phpmd": "^2.6",
         "friendsofphp/php-cs-fixer": "^2.14",
         "mockery/mockery": "^1.0",
         "phpstan/phpstan": "^0.12",
         "hyperf/testing": "2.1.*",
-	    "doctrine/inflector": "2.0"
+        "doctrine/inflector": "2.0"
     },
     "suggest": {
         "ext-openssl": "Required to use HTTPS.",
